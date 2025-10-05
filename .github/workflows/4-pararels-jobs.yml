@@ -1,0 +1,21 @@
+name: Zad4 - Parallel jobs
+on:
+  workflow_dispatch: # MANUAL TRIGGER
+   
+jobs:
+  display-current-date:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print current date
+        run: |
+          echo "Current date"
+          echo $(date +'%Y-%m-%dT%H-%M-%S')
+          
+  display-env-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print system info
+        run: |
+          echo "Running job on:"
+          echo ${{ runner.os }}
+        
