@@ -11,12 +11,11 @@ jobs:
         run: |
           echo "Current date"
           echo $(date +'%Y-%m-%dT%H-%M-%S')
-          
   display-env-info:
     needs: [display-current-date]
     runs-on: ubuntu-latest
     steps:
-      - name: Print system info
+      - name: Print OS on console
         run: |
           echo "Running job on:"
           echo ${{ runner.os }}
