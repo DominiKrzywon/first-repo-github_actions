@@ -1,0 +1,32 @@
+name: Zad6 - Passing artifacts
+
+on:
+  workflow_dispatch: # MANUAL TRIGGER
+   
+jobs:
+  generate-file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create text file
+        run: echo "Hello world XXI!" > my_text_file.txt
+      - name: Upload text file
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: my_file
+          path: my_text_file.txt
+          retention-days: 1
+          
+  download-and-process-file:
+    needs: [generate-file]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download blob reports
+        uses: actions/download-artifact@v4
+        with:
+          name: my_file
+          path: my_folder
+
+      - name: Display contents of the downloaded file
+        run: cat my_folder/my_text_file.txt
+        
