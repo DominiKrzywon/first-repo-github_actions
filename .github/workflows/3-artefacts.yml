@@ -1,0 +1,19 @@
+name: Zad3 - Simple txt artifact
+
+on:
+ workflow_dispatch: # MANUAL TRIGGER
+
+jobs:
+  create-file:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Create a file
+      run: |
+        echo $(date) > current_date.txt
+    - name: Archive File as Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: current_date_artifact
+        path: current_date.txt
