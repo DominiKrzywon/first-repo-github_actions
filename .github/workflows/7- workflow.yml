@@ -1,0 +1,45 @@
+name: Zad7 - Workflow with multiple jobs
+on:
+  workflow_dispatch: # MANUAL TRIGGER
+  
+jobs: 
+  test-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run test-smoke
+        run: echo "Running test-somke"
+
+  test-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run test-api
+        run: echo "Running test-api"
+
+  test-integration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run test-integration
+        run: echo "Running test-integration"
+
+  test-e2e:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Run test-e2e
+        run: echo "Running e2e test"
+
+  deploy-test:
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    needs: [test-api, test-integration, test-e2e]
+    steps:
+      - name: Run deploy-test
+        run: echo "Running deploy test"
+
+  deploy-stage:
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    needs: deploy-test
+    steps: 
+      - name: Run stage-test
+        run: echo "Running stage test"
+      
